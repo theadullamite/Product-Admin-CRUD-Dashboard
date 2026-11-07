@@ -1,5 +1,6 @@
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable} from '@tanstack/react-table'
-import { useProductStore, Product } from '../../store/useProductStore'
+import { createColumnHelper, flexRender, createCoreRowModel, useReactTable} from '@tanstack/react-table'
+import { useProductStore } from '../../store/useProductStore'
+import type { Product } from '../../store/useProductStore'
 
 const columnHelper = createColumnHelper<Product>()
 
@@ -28,7 +29,7 @@ export default function ProductTable() {
     const { products, search } = useProductStore()
     const filtered = products.filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase()))
 
-    const table = useReactTable({ data: filtered, columns, getCoreRowModel: getCoreRowModel() })
+    const table = useReactTable({ data: filtered, columns, getCoreRowModel: createCoreRowModel() })
 
     return (
         <div className="w-full overflow-x-auto rounded-2xl border border-white/10 bg-[#12121a]">
